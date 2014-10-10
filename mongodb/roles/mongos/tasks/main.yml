@@ -29,3 +29,6 @@
 
 - name: copy the file enable  sharding 
   template: src=enablesharding.j2 dest=/tmp/enablesharding.js
+
+- name: enable sharding
+  command: mongo {{ inventory_hostname }}:{{ mongos_port }} /tmp/enablesharding.js
