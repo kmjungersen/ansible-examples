@@ -7,16 +7,20 @@
 - name: Create the mongo configuration server startup file
   template: src=mongoc.j2 dest=/etc/init.d/mongoc mode=0655
 
-
 - name: Create the mongo configuration server file
   template: src=mongoc.conf.j2 dest=/etc/mongoc.conf
-
 
 - name: Copy the keyfile for authentication
   copy: src=roles/mongod/files/secret dest={{ mongodb_datadir_prefix }}/secret owner=mongod group=mongod mode=0400
 
-- name: Start the mongo configuration server service
-  command: creates=/var/lock/subsys/mongoc /etc/init.d/mongoc start
+#- name: Before starting mongoc, make sure it's not already running
+#  service: name=mongoc state=stopped
+
+- name: start mongoc
+  command: mongod -f /etc/mongoc.conf
+
+#- name: Start the mongo configuration server service
+#  command: mongod --fork --logpath /var/log/mongo-configdb.log --configsvr --port {{ mongoc_port }}
 
 - name: pause
   pause: seconds=20

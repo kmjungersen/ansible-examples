@@ -1,5 +1,10 @@
 ---
 # This Playbook runs all the common plays in the deployment 
+- name: Install some cool libselinux-python
+  yum: name=libselinux-python state=installed
+
+- name: Install some VIM
+  yum: name=vim state=installed
 
 - name: Create the hosts file for all machines
   template: src=hosts.j2 dest=/etc/hosts
