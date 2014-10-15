@@ -1,8 +1,0 @@
----
-# testing for deployments
-
-- name: bring over new mongod config files
-  template: src=roles/mongod/templates/mongod.conf.j2 dest=/etc/mongod.conf
-
-- name: start mongod
-  command: mongod -f /etc/mongod.conf
